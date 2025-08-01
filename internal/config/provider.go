@@ -137,6 +137,13 @@ func loadProviders(client ProviderClient, path string) (providerList []catwalk.P
 		return
 	}
 	if !exists {
+		// If no cache exists and external providers failed, but we have Ollama, just use Ollama
+		if ollamaProvider, ollamaErr := createOllamaProvider(context.Background()); ollamaErr == nil {
+			slog.Info("No external providers available, using only Ollama provider")
+			providerList = []catwalk.Provider{*ollamaProvider}
+			err = nil
+			return
+		}
 		err = fmt.Errorf("failed to load providers")
 		return
 	}
