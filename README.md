@@ -314,6 +314,131 @@ Custom Anthropic-compatible providers follow this format:
 }
 ```
 
+#### Local Providers (Ollama)
+
+For local LLM providers like Ollama, you can configure Crush to use locally running models. Ollama provides an OpenAI-compatible API that Crush can connect to directly. First, make sure Ollama is running on your system (typically on `http://localhost:11434`).
+
+```json
+{
+  "$schema": "https://charm.land/crush.json",
+  "providers": {
+    "ollama": {
+      "type": "openai",
+      "base_url": "http://localhost:11434/v1",
+      "api_key": "",
+      "models": [
+        {
+          "id": "codellama:34b",
+          "name": "Code Llama 34B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 16384,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        },
+        {
+          "id": "codellama:13b",
+          "name": "Code Llama 13B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 16384,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        },
+        {
+          "id": "codellama:7b",
+          "name": "Code Llama 7B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 16384,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        },
+        {
+          "id": "deepseek-coder:33b",
+          "name": "DeepSeek Coder 33B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 16384,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        },
+        {
+          "id": "deepseek-coder:6.7b",
+          "name": "DeepSeek Coder 6.7B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 16384,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        },
+        {
+          "id": "llama3.1:8b",
+          "name": "Llama 3.1 8B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 131072,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        },
+        {
+          "id": "qwen2.5-coder:32b",
+          "name": "Qwen2.5 Coder 32B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 32768,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        },
+        {
+          "id": "qwen2.5-coder:7b",
+          "name": "Qwen2.5 Coder 7B",
+          "cost_per_1m_in": 0,
+          "cost_per_1m_out": 0,
+          "cost_per_1m_in_cached": 0,
+          "cost_per_1m_out_cached": 0,
+          "context_window": 32768,
+          "default_max_tokens": 4096,
+          "can_reason": false,
+          "has_reasoning_efforts": false,
+          "supports_attachments": false
+        }
+      ]
+    }
+  }
+}
+```
+
+Note that all costs are set to 0 since Ollama runs locally, and no API key is required. Make sure to download the models you want to use with `ollama pull <model-name>` before trying to use them in Crush.
+
 ## Logging
 
 Sometimes you need to look at logs. Luckily, Crush logs all sorts of
