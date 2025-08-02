@@ -199,15 +199,24 @@ func (c *Config) configureProviders(env env.Env, resolver VariableResolver, know
 				}
 			}
 		default:
-			// if the provider api or endpoint are missing we skip them
-			v, err := resolver.ResolveValue(p.APIKey)
-			if v == "" || err != nil {
-				if configExists {
-					slog.Warn("Skipping provider due to missing API key", "provider", p.ID)
-					c.Providers.Del(string(p.ID))
+			// Special handling for Ollama provider - auto-configure if available and no API key required
+			if string(p.ID) == "ollama" {
+				slog.Info("Auto-configuring Ollama provider", "models", len(p.Models))
+			} else {
+				// if the provider api or endpoint are missing we skip them
+				v, err := resolver.ResolveValue(p.APIKey)
+				if v == "" || err != nil {
+					if configExists {
+						slog.Warn("Skipping provider due to missing API key", "provider", p.ID)
+						c.Providers.Del(string(p.ID))
+					}
+					continue
 				}
-				continue
 			}
+		}
+
+		if c.Providers == nil {
+			c.Providers = csync.NewMap[string, ProviderConfig]()
 		}
 		c.Providers.Set(string(p.ID), prepared)
 	}
